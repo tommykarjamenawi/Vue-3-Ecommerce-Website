@@ -17,6 +17,7 @@
           id="loginEmail"
           type="email"
           name="email"
+          v-model="email"
           placeholder="Your email address"
           class="border-gray-300 focus:border-purple-500 focus:outline-none focus:ring-purple-500 rounded-md w-full"
         />
@@ -26,6 +27,7 @@
           id="loginPassword"
           type="password"
           name="password"
+          v-model="password"
           placeholder="Your password"
           class="border-gray-300 focus:border-purple-500 focus:outline-none focus:ring-purple-500 rounded-md w-full"
         />
@@ -47,6 +49,7 @@
         >
       </div>
       <button
+        @click.prevent="login"
         class="btn-primary bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 w-full"
       >
         Login
@@ -54,3 +57,31 @@
     </form>
   </main>
 </template>
+
+<script>
+import { useUserStore } from "@/stores/user";
+export default {
+  name: "LoginView",
+  data() {
+    return {
+      email: "",
+      password: "",
+      errorMessage: "",
+    };
+  },
+  methods: {
+    login() {
+      console.log("sent login request: " + this.email + " " + this.password);
+      const userStore = useUserStore();
+      userStore
+        .login(this.email, this.password)
+        .then(() => {
+          this.$router.replace("/products");
+        })
+        .catch((error) => {
+          this.errorMessage = error;
+        });
+    },
+  },
+};
+</script>
