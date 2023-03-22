@@ -10,6 +10,7 @@ export const useUserStore = defineStore("user", {
   getters: {
     loggedIn: (state) => state.email != "",
     getToken: (state) => state.token,
+    getCurrentUserRole: (state) => state.role,
   },
   actions: {
     login(semail, spassword) {
@@ -38,13 +39,27 @@ export const useUserStore = defineStore("user", {
       const token = localStorage.getItem("token");
       const email = localStorage.getItem("email");
       const role = localStorage.getItem("role");
-      if (token && email) {
+      if (token && email && role) {
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
         this.token = token;
         this.email = email;
         this.role = role;
-        console.log("auto login completed???");
+        console.log("auto login:" + this.email + " " + this.role);
+      } else {
+        this.role = 3; // guest
+        console.log("auto login: " + this.role + " (guest)");
       }
+    },
+    logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("email");
+      localStorage.removeItem("role");
+      this.token = "";
+      this.email = "";
+      this.role = "";
+
+      // go to login page
+      this.$router.push("/login");
     },
   },
 });

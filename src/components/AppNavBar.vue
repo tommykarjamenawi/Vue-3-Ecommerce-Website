@@ -165,7 +165,7 @@
             </li>
             <li class="hover:bg-slate-900">
               <a
-                href="/src/logout.html"
+                @click.prevent="logout"
                 class="flex items-center px-3 py-2 hover:bg-slate-900"
               >
                 <svg
@@ -380,8 +380,8 @@
             </li>
             <li>
               <a
-                href="/src/logout.html"
                 class="flex px-3 py-2 hover:bg-slate-900"
+                @click.prevent="logout"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -454,6 +454,7 @@
 </template>
 
 <script>
+import { useUserStore } from '@/stores/user'
 export default {
   name: "AppNavBar",
   data() {
@@ -477,6 +478,9 @@ export default {
       } else {
         this.showMobileDropdown = true;
       }
+    },
+    logout() {
+      useUserStore.logout();
     },
   },
 };

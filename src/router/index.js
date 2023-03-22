@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { requireAuth } from "@/authGuard.js";
 
 // Dynamic import (lazy loading)
 const Home = () => import("@/views/HomeView.vue");
@@ -51,6 +52,7 @@ const routes = [
     name: "profile",
     path: "/profile",
     component: Profile,
+    beforeEnter: requireAuth,
   },
   {
     name: "cart",
@@ -66,11 +68,13 @@ const routes = [
     name: "orders",
     path: "/orders",
     component: Orders,
+    beforeEnter: requireAuth,
   },
   {
     name: "order-details",
     path: "/orders/:id",
     component: OrderDetails,
+    beforeEnter: requireAuth,
   },
   {
     name: "password-reset",
@@ -81,6 +85,7 @@ const routes = [
     name: "admin",
     path: "/admin",
     component: Admin,
+    beforeEnter: requireAuth, // protect the route
   },
   {
     name: "invoice",

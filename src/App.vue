@@ -9,15 +9,32 @@
 <script>
 import AppNavBar from "@/components/AppNavBar.vue";
 import { useUserStore } from '@/stores/user'
+import { useCartStore } from "./stores/cart";
+import { useProductStore } from "./stores/product";
 
 export default {
   name: "App",
   components: {
     AppNavBar,
   },
+  data() {
+    return {
+      userStore: null,
+      useCartStore: null,
+      useProductStore: null,
+    };
+  },
   mounted() {
-    const userStore = useUserStore();
-    userStore.autoLogin();
+    // auto login
+    this.userStore = useUserStore();
+    this.userStore.autoLogin();
+
+    // load cart from local storage
+    this.useCartStore = useCartStore();
+    this.useCartStore.loadCart();
+
+    // initialize product store
+    this.useProductStore = useProductStore();
   },
 };
 </script>
