@@ -4,23 +4,23 @@ import axios from "../axios-auth";
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cart: [],
-    cartTotal: 0,
     cartCount: 0,
   }),
   getters: {
     getCart: (state) => state.cart,
+    getCartCount: (state) => state.cartCount,
   },
   computed: {
-    // calculate total price of cart
-    cartTotal() {
-      return this.cart.reduce((total, product) => {
-        return total + product.price * product.quantity;
-      }, 0);
-    },
     // calculate total number of items in cart
     cartCount() {
       return this.cart.reduce((total, product) => {
         return total + product.quantity;
+      }, 0);
+    },
+    // calculate total price of items in cart
+    cartTotal() {
+      return this.cart.reduce((total, product) => {
+        return total + product.price * product.quantity;
       }, 0);
     },
   },
@@ -39,12 +39,16 @@ export const useCartStore = defineStore("cart", {
       }
       // save cart to local storage
       this.saveCart();
+
+      console.log(this.cart);
     },
     removeFromCart(product) {
       // remove product from cart
       this.cart = this.cart.filter((p) => p.id !== product.id);
       // save cart to local storage
       this.saveCart();
+
+      console.log(this.cart);
     },
     updateQuantity(product, quantity) {
       // update quantity of product in cart
@@ -52,12 +56,16 @@ export const useCartStore = defineStore("cart", {
       productExists.quantity = quantity;
       // save cart to local storage
       this.saveCart();
+
+      console.log("update quantity is: " + quantity);
     },
     clearCart() {
       // clear cart
       this.cart = [];
       // save cart to local storage
       this.saveCart();
+
+      console.log(this.cart);
     },
     checkout() {
       // checkout cart

@@ -7,139 +7,36 @@
         <!-- Product Items -->
         <div>
           <!-- Product Item -->
-          <div class="flex flex-col sm:flex-row items-center gap-4">
-            <img src="../assets/img/1_1.jpg" class="w-36" alt="" />
+          <div
+            v-for="product in this.cart"
+            :key="product.id"
+            class="flex flex-col sm:flex-row items-center gap-4"
+          >
+            <img :src="`${this.baseIMG}${product.image}`" class="w-36" alt="" />
             <div class="flex flex-col justify-between">
-              <div class="flex justify-between mb-3">
+              <div class="flex justify-between mb-3 gap-2">
                 <h3>
-                  Logitech G502 HERO High Performance Wired Gaming Mouse, HERO
-                  25K Sensor, 25,600 DPI, RGB, Adjustable Weights, 11
+                  {{ product.name }}
                 </h3>
-                <span class="text-lg font-semibold"> $17.99 </span>
+                <span class="text-lg font-semibold">
+                  ${{ product.price * product.quantity }}
+                </span>
               </div>
               <div class="flex justify-between items-center">
                 <div class="flex items-center">
                   Qty:
                   <select
-                    name=""
-                    id=""
-                    class="ml-3 py-1 border-gray-200 focus:border-purple-600 focus:ring-purple-600"
+                    v-model="product.quantity"
+                    class="ml-2 border border-gray-300 rounded-md px-3 py-3"
+                    @change="updateQuantity(product, $event.target.value)"
                   >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-                </div>
-                <a href="#" class="text-purple-600 hover:text-purple-500"
-                  >Remove</a
-                >
-              </div>
-            </div>
-          </div>
-          <!--/ Product Item -->
-          <hr class="my-5" />
-          <!-- Product Item -->
-          <div class="flex flex-col sm:flex-row items-center gap-4">
-            <img src="../assets/img/1_1.jpg" class="w-36" alt="" />
-            <div class="flex flex-col justify-between">
-              <div class="flex justify-between mb-3">
-                <h3>
-                  Logitech G502 HERO High Performance Wired Gaming Mouse, HERO
-                  25K Sensor, 25,600 DPI, RGB, Adjustable Weights, 11
-                </h3>
-                <span class="text-lg font-semibold"> $17.99 </span>
-              </div>
-              <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                  Qty:
-                  <select
-                    name=""
-                    id=""
-                    class="ml-3 py-1 border-gray-200 focus:border-purple-600 focus:ring-purple-600"
-                  >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-                </div>
-                <a href="#" class="text-purple-600 hover:text-purple-500"
-                  >Remove</a
-                >
-              </div>
-            </div>
-          </div>
-          <!--/ Product Item -->
-          <hr class="my-5" />
-          <!-- Product Item -->
-          <div class="flex flex-col sm:flex-row items-center gap-4">
-            <img src="../assets/img/1_1.jpg" class="w-36" alt="" />
-            <div class="flex flex-col justify-between">
-              <div class="flex justify-between mb-3">
-                <h3>
-                  Logitech G502 HERO High Performance Wired Gaming Mouse, HERO
-                  25K Sensor, 25,600 DPI, RGB, Adjustable Weights, 11
-                </h3>
-                <span class="text-lg font-semibold"> $17.99 </span>
-              </div>
-              <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                  Qty:
-                  <select
-                    name=""
-                    id=""
-                    class="ml-3 py-1 border-gray-200 focus:border-purple-600 focus:ring-purple-600"
-                  >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                  </select>
-                </div>
-                <a href="#" class="text-purple-600 hover:text-purple-500"
-                  >Remove</a
-                >
-              </div>
-            </div>
-          </div>
-          <!--/ Product Item -->
-          <hr class="my-5" />
-          <!-- Product Item -->
-          <div class="flex flex-col sm:flex-row items-center gap-4">
-            <img src="../assets/img/1_1.jpg" class="w-36" alt="" />
-            <div class="flex flex-col justify-between">
-              <div class="flex justify-between mb-3">
-                <h3>
-                  Logitech G502 HERO High Performance Wired Gaming Mouse, HERO
-                  25K Sensor, 25,600 DPI, RGB, Adjustable Weights, 11
-                </h3>
-                <span class="text-lg font-semibold"> $17.99 </span>
-              </div>
-              <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                  Qty:
-                  <select
-                    name=""
-                    id=""
-                    class="ml-3 py-1 border-gray-200 focus:border-purple-600 focus:ring-purple-600"
-                  >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
+                    <option
+                      v-for="quantity in this.quantities"
+                      :key="quantity"
+                      :value="quantity"
+                    >
+                      {{ quantity }}
+                    </option>
                   </select>
                 </div>
                 <a href="#" class="text-purple-600 hover:text-purple-500"
@@ -154,9 +51,18 @@
         <!--/ Product Items -->
 
         <div class="border-t border-gray-300 pt-4">
+          <!-- clear cart button -->
+          <button
+            @click.prevent="clearCart()"
+            class="btn-primary w-50 py-3 text-lg"
+          >
+            Clear Cart
+          </button>
           <div class="flex justify-between">
             <span class="font-semibold">Subtotal</span>
-            <span class="text-xl">$157</span>
+            <span class="text-xl" :value="total.toFixed(2)"
+              >${{ total.toFixed(2) }}</span
+            >
           </div>
           <p class="text-gray-500 mb-6">
             Shipping and taxes calculated at checkout.
@@ -170,3 +76,58 @@
     </div>
   </main>
 </template>
+
+<script>
+import { useCartStore } from "@/stores/cart";
+
+export default {
+  name: "CartView",
+  data() {
+    return {
+      baseIMG: "/src/assets",
+      cart: [],
+      quantities: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      total: 0,
+    };
+  },
+  async created() {
+    this.getCartData();
+  },
+  methods: {
+    removeFromCart(product) {
+      const cartStore = useCartStore();
+      cartStore.removeFromCart(product);
+    },
+    updateQuantity(product, quantity) {
+      const cartStore = useCartStore();
+      cartStore.updateQuantity(product, quantity);
+
+      this.getCartData();
+    },
+    clearCart() {
+      const cartStore = useCartStore();
+      cartStore.clearCart();
+
+      this.cart = [];
+    },
+    checkout() {
+      const cartStore = useCartStore();
+      cartStore.checkout();
+    },
+    totalPrice() {
+      // loop through cart and add up the total
+      this.total = 0;
+      this.cart.forEach((product) => {
+        this.total += product.price * product.quantity;
+      });
+    },
+    getCartData() {
+      // get cart from store
+      const cartStore = useCartStore();
+      this.cart = cartStore.cart;
+      // console.log(this.cart);
+      this.totalPrice();
+    },
+  },
+};
+</script>

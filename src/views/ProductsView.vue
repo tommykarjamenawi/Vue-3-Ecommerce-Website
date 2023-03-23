@@ -13,7 +13,7 @@
           :key="product.id"
           class="border border-1 border-gray-200 rounded-md hover:border-purple-600 transition-colors bg-white"
         >
-          <a href="/products/1" class="block overflow-hidden">
+          <a :href="`/products/${product.id}`" class="block overflow-hidden">
             <img
               :src="`${this.baseIMG}${product.image}`"
               alt=""
@@ -22,7 +22,7 @@
           </a>
           <div class="p-4">
             <h3 class="text-lg">
-              <a href="/src/product.html">
+              <a :href="`/products/${product.id}`">
                 {{ product.description }}
               </a>
             </h3>
@@ -47,7 +47,20 @@
                 />
               </svg>
             </button>
-            <button @click.prevent="addToCart" class="btn-primary">Add to Cart</button>
+            <button
+              @click.prevent="
+                addToCart({
+                  id: product.id,
+                  name: product.name,
+                  price: product.price,
+                  quantity: 1,
+                  image: product.image,
+                })
+              "
+              class="btn-primary"
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
         <!--/ Product Item -->
@@ -67,6 +80,13 @@ export default {
     return {
       baseIMG: "/src/assets",
       products: [],
+      selectedProduct: {
+        id: 0,
+        name: "",
+        price: 0,
+        quantity: 0,
+        image: "",
+      },
     };
   },
   async created() {
@@ -76,9 +96,9 @@ export default {
     this.products = productStore.getProducts;
   },
   methods: {
-    addToCart(product) {
+    addToCart(selectedProduct) {
       const cartStore = useCartStore();
-      cartStore.addToCart(product);
+      cartStore.addToCart(selectedProduct);
     },
   },
 };
