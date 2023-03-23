@@ -13,6 +13,8 @@ export const useUserStore = defineStore("user", {
     loggedIn: (state) => state.email != "",
     getToken: (state) => state.token,
     getCurrentUserRole: (state) => state.role,
+    getCurrentUserId: (state) => state.id,
+    getCurrentUserFullName: (state) => state.full_name,
   },
   actions: {
     login(semail, spassword) {

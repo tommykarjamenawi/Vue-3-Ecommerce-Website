@@ -1,7 +1,7 @@
 <template>
   <main class="p-5">
     <div class="container lg:w-2/3 xl:w-2/3 mx-auto">
-      <h1 class="text-3xl font-bold mb-6">Order #1234 Details</h1>
+      <h1 class="text-3xl font-bold mb-6">Order #{{ order_id }} Details</h1>
 
       <div class="bg-white p-3 rounded-md shadow-md">
         <div>
@@ -9,7 +9,7 @@
             <tbody>
               <tr>
                 <td class="font-bold">Order #</td>
-                <td>1234</td>
+                <td>{{ order_id }}</td>
               </tr>
               <tr>
                 <td class="font-bold">Order Date</td>
@@ -34,57 +34,23 @@
         <hr class="my-5" />
 
         <!-- Order Items -->
-        <div>
+        <div v-for="orderItem in this.orderItems" :key="orderItem.id">
           <!-- Product Item -->
           <div class="flex gap-6">
             <div class="w-16 h-16 flex items-center border border-gray-300">
-              <img src="../assets/img/1_1.jpg" alt="" />
+              <img :src="`${this.baseIMG}${orderItem.image}`" alt="" />
             </div>
             <div class="flex-1 flex flex-col justify-between pb-3">
               <h3 class="text-ellipsis mb-4">
-                Logitech G502 HERO High Performance Wired Gaming Mouse, HERO 25K
-                Sensor, 25,600 DPI, RGB, Adjustable Weights, 11
+                {{ orderItem.name }}
               </h3>
             </div>
             <div class="flex flex-col justify-between items-end pb-3 w-32">
-              <div class="text-lg mb-4">$17.99</div>
+              <div class="text-lg mb-4">Amount: {{ orderItem.quantity }}</div>
             </div>
           </div>
           <!--/ Product Item -->
           <hr class="my-2" />
-          <!-- Product Item -->
-          <div class="flex gap-6">
-            <div class="w-16 h-16 flex items-center border border-gray-300">
-              <img src="../assets/img/1_1.jpg" alt="" />
-            </div>
-            <div class="flex-1 flex flex-col justify-between pb-3">
-              <h3 class="text-ellipsis mb-4">
-                Logitech G502 HERO High Performance Wired Gaming Mouse, HERO 25K
-                Sensor, 25,600 DPI, RGB, Adjustable Weights, 11
-              </h3>
-            </div>
-            <div class="flex flex-col justify-between items-end pb-3 w-32">
-              <div class="text-lg mb-4">$17.99</div>
-            </div>
-          </div>
-          <!--/ Product Item -->
-          <hr class="my-2" />
-          <!-- Product Item -->
-          <div class="flex gap-6">
-            <div class="w-16 h-16 flex items-center border border-gray-300">
-              <img src="../assets/img/1_1.jpg" alt="" />
-            </div>
-            <div class="flex-1 flex flex-col justify-between pb-3">
-              <h3 class="text-ellipsis mb-4">
-                Logitech G502 HERO High Performance Wired Gaming Mouse, HERO 25K
-                Sensor, 25,600 DPI, RGB, Adjustable Weights, 11
-              </h3>
-            </div>
-            <div class="flex flex-col justify-between items-end pb-3 w-32">
-              <div class="text-lg mb-4">$17.99</div>
-            </div>
-          </div>
-          <!--/ Product Item -->
         </div>
         <!--/ Order Items -->
 
@@ -114,3 +80,25 @@
     </div>
   </main>
 </template>
+
+<script>
+import { useOrderStore } from "@/stores/order";
+import { useUserStore } from "@/stores/user";
+
+export default {
+  name: "OrdersView",
+  data() {
+    return {
+      baseIMG: "/src/assets",
+      orderItems: [],
+      order_id: this.$route.params.id,
+    };
+  },
+  async mounted() {
+    const userStore = useUserStore();
+    const orderStore = useOrderStore();
+    this.orderItems = await orderStore.fetchOrder(userStore.id);
+    console.log(this.orderItems);
+  },
+};
+</script>

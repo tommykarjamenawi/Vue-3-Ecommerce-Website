@@ -4,11 +4,9 @@ import axios from "../axios-auth";
 export const useOrderStore = defineStore("order", {
   state: () => ({
     orders: [], // orders is an array of orders
-    order: [], // order is an array of products
   }),
   getters: {
     getOrders: (state) => state.orders,
-    getOrder: (state) => state.order,
   },
   actions: {
     async fetchOrders(id) {
@@ -24,7 +22,8 @@ export const useOrderStore = defineStore("order", {
       try {
         const response = await axios.get(`/orders/${id}`);
         // console.log(response);
-        this.order = response.data;
+        // this.order = response.data;
+        return response.data;
       } catch (error) {
         console.error(error);
       }
