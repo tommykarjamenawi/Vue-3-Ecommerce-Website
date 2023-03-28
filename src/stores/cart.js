@@ -4,19 +4,11 @@ import axios from "../axios-auth";
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cart: [],
-    cartCount: 0,
   }),
   getters: {
     getCart: (state) => state.cart,
-    getCartCount: (state) => state.cartCount,
   },
   computed: {
-    // calculate total number of items in cart
-    cartCount() {
-      return this.cart.reduce((total, product) => {
-        return total + product.quantity;
-      }, 0);
-    },
     // calculate total price of items in cart
     cartTotal() {
       return this.cart.reduce((total, product) => {
@@ -93,6 +85,9 @@ export const useCartStore = defineStore("cart", {
     // save cart to local storage
     saveCart() {
       localStorage.setItem("cart", JSON.stringify(this.cart));
+    },
+    cartCount() {
+      return this.cart.length;
     },
   },
 });

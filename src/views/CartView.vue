@@ -69,6 +69,7 @@
           </p>
 
           <button
+            v-if="this.cart.length > 0"
             class="btn-primary w-full py-3 text-lg"
             @click.prevent="checkout()"
           >
@@ -112,8 +113,12 @@ export default {
       cartStore.clearCart();
 
       this.cart = [];
+      this.total = 0;
     },
     checkout() {
+      if (this.cart.length < 1) {
+        return;
+      }
       const cartStore = useCartStore();
       cartStore.checkout();
       // go to homepage

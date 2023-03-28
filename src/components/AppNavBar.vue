@@ -60,6 +60,11 @@
               />
             </svg>
             Cart mobile
+            <span
+              v-if="this.useCartStore.cartCount() > 0"
+              class="flex items-center justify-center h-5 w-5 bg-red-500 rounded-full text-white text-xs ml-2"
+              >{{ this.useCartStore.cartCount() }}</span
+            >
           </router-link>
         </li>
         <li class="relative" v-if="loggedIn()">
@@ -271,6 +276,11 @@
               />
             </svg>
             Cart PC
+            <span
+              v-if="this.useCartStore.cartCount() > 0"
+              class="flex items-center justify-center h-5 w-5 bg-red-500 rounded-full text-white text-xs ml-2"
+              >{{ this.useCartStore.cartCount() }}</span
+            >
           </router-link>
         </li>
         <!-- My Account -->
@@ -456,7 +466,8 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from "@/stores/user";
+import { useCartStore } from "@/stores/cart";
 export default {
   name: "AppNavBar",
   data() {
@@ -464,7 +475,11 @@ export default {
       hamburger: false,
       showDropdown: false,
       showMobileDropdown: false,
+      useCartStore: null,
     };
+  },
+  mounted() {
+    this.useCartStore = useCartStore();
   },
   methods: {
     toggleDropdown() {
