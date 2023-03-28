@@ -41,6 +41,7 @@
       <ul>
         <li>
           <router-link
+            v-if="loggedIn()"
             :to="{ name: 'cart' }"
             class="flex items-center py-2 px-3 transition-colors hover:bg-slate-800"
           >
@@ -61,7 +62,7 @@
             Cart mobile
           </router-link>
         </li>
-        <li class="relative">
+        <li class="relative" v-if="loggedIn()">
           <a
             href="#"
             class="flex justify-between items-center py-2 px-3 hover:bg-slate-800"
@@ -251,6 +252,7 @@
       <ul class="grid grid-flow-col items-center">
         <li>
           <router-link
+            v-if="loggedIn()"
             :to="{ name: 'cart' }"
             class="inline-flex items-center px-3 py-2 hover:bg-slate-900"
           >
@@ -272,7 +274,7 @@
           </router-link>
         </li>
         <!-- My Account -->
-        <li class="relative">
+        <li class="relative" v-if="loggedIn()">
           <a
             href="#"
             class="flex items-center px-3 py-2 pr-5 hover:bg-slate-900"
@@ -481,6 +483,9 @@ export default {
     },
     logout() {
       useUserStore().logout();
+    },
+    loggedIn() {
+      return useUserStore().loggedIn;
     },
   },
 };
