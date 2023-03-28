@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "../axios-auth";
+import router from "@/router/index";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -77,8 +78,8 @@ export const useUserStore = defineStore("user", {
       this.email = "";
       this.role = "";
 
-      // go to login page
-      this.$router.push("/login");
+      // go to login page using router to /login
+      router.push({ name: "login" });
     },
   },
 });

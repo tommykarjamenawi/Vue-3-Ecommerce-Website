@@ -165,7 +165,7 @@
             </li>
             <li class="hover:bg-slate-900">
               <a
-                @click.prevent="logout"
+                @click.prevent="logout()"
                 class="flex items-center px-3 py-2 hover:bg-slate-900"
               >
                 <svg
@@ -381,7 +381,7 @@
             <li>
               <a
                 class="flex px-3 py-2 hover:bg-slate-900"
-                @click.prevent="logout"
+                @click.prevent="logout()"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -480,7 +480,7 @@ export default {
       }
     },
     logout() {
-      useUserStore.logout();
+      useUserStore().logout();
     },
   },
 };

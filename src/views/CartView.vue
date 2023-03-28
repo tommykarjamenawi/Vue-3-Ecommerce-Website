@@ -68,7 +68,10 @@
             Shipping and taxes calculated at checkout.
           </p>
 
-          <button type="submit" class="btn-primary w-full py-3 text-lg">
+          <button
+            class="btn-primary w-full py-3 text-lg"
+            @click.prevent="checkout()"
+          >
             Proceed to Checkout
           </button>
         </div>
@@ -113,6 +116,8 @@ export default {
     checkout() {
       const cartStore = useCartStore();
       cartStore.checkout();
+      // go to homepage
+      this.$router.push("/");
     },
     totalPrice() {
       // loop through cart and add up the total

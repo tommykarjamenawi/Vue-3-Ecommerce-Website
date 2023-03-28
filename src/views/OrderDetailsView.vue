@@ -83,7 +83,7 @@
 
 <script>
 import { useOrderStore } from "@/stores/order";
-import { useUserStore } from "@/stores/user";
+// import { useUserStore } from "@/stores/user";
 
 export default {
   name: "OrdersView",
@@ -95,9 +95,9 @@ export default {
     };
   },
   async mounted() {
-    const userStore = useUserStore();
+    // const userStore = useUserStore();
     const orderStore = useOrderStore();
-    this.orderItems = await orderStore.fetchOrder(userStore.id);
+    this.orderItems = await orderStore.fetchOrder(this.order_id);
     console.log(this.orderItems);
   },
 };

@@ -68,6 +68,7 @@ export const useCartStore = defineStore("cart", {
       console.log(this.cart);
     },
     checkout() {
+      console.log(this.cart);
       // checkout cart
       return new Promise((resolve, reject) => {
         axios
