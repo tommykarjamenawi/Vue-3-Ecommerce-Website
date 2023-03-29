@@ -39,9 +39,8 @@
         </li>
       </ul>
       <ul>
-        <li>
+        <li v-if="loggedIn()">
           <router-link
-            v-if="loggedIn()"
             :to="{ name: 'cart' }"
             class="flex items-center py-2 px-3 transition-colors hover:bg-slate-800"
           >
@@ -193,7 +192,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li v-if="!loggedIn()">
           <a
             href="/src/login.html"
             class="flex items-center py-2 px-3 transition-colors hover:bg-slate-800"
@@ -255,9 +254,8 @@
     </nav>
     <nav class="hidden md:block">
       <ul class="grid grid-flow-col items-center">
-        <li>
+        <li >
           <router-link
-            v-if="loggedIn()"
             :to="{ name: 'cart' }"
             class="inline-flex items-center px-3 py-2 hover:bg-slate-900"
           >
@@ -277,7 +275,7 @@
             </svg>
             Cart PC
             <span
-              v-if="this.useCartStore.cartCount() > 0"
+              v-if="loggedIn() && this.useCartStore.cartCount() > 0"
               class="flex items-center justify-center h-5 w-5 bg-red-500 rounded-full text-white text-xs ml-2"
               >{{ this.useCartStore.cartCount() }}</span
             >
@@ -414,7 +412,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li v-if="!loggedIn()">
           <router-link
             :to="{ name: 'login' }"
             class="flex items-center px-3 py-2 hover:bg-slate-900"

@@ -69,7 +69,7 @@
           </p>
 
           <button
-            v-if="this.cart.length > 0"
+            v-if="this.loggedIn()"
             class="btn-primary w-full py-3 text-lg"
             @click.prevent="checkout()"
           >
@@ -83,6 +83,7 @@
 
 <script>
 import { useCartStore } from "@/stores/cart";
+import { useUserStore } from "@/stores/user";
 
 export default {
   name: "CartView",
@@ -116,7 +117,7 @@ export default {
       this.total = 0;
     },
     checkout() {
-      if (this.cart.length < 1) {
+      if (this.cart.length < 1 || !this.loggedIn) {
         return;
       }
       const cartStore = useCartStore();
@@ -137,6 +138,9 @@ export default {
       this.cart = cartStore.cart;
       // console.log(this.cart);
       this.totalPrice();
+    },
+    loggedIn() {
+      return useUserStore().loggedIn;
     },
   },
 };
