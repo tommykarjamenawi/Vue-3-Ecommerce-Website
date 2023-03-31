@@ -81,5 +81,33 @@ export const useUserStore = defineStore("user", {
       // go to login page using router to /login
       router.push({ name: "login" });
     },
+    async getUserDetails() {
+      const res = await axios.get("/users/" + this.id);
+      console.log("getUserDetails below...");
+      console.log(res.data);
+      // put data in a user object
+      const user = {
+        id: res.data.id,
+        full_name: res.data.full_name,
+        email: res.data.email,
+        // password: res.data.password,
+        address: res.data.address,
+        // role: res.data.role,
+        // image: res.data.image,
+      };
+      return user;
+    },
+    async updateUserDetails(user) {
+      const res = await axios.put("/users/" + this.id, user);
+      console.log(res.data);
+      return res.data.message;
+    },
+    async updatePassword(password) {
+      const res = await axios.put("/users/" + this.id + "/password", {
+        password: password,
+      });
+      console.log(res.data);
+      return res.data.message;
+    },
   },
 });

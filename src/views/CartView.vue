@@ -71,7 +71,7 @@
           </p>
 
           <button
-            v-if="this.loggedIn()"
+            v-if="showPayButton()"
             class="btn-primary w-full py-3 text-lg"
             @click.prevent="checkout()"
           >
@@ -101,6 +101,9 @@ export default {
     this.getCartData();
   },
   methods: {
+    showPayButton() {
+      return this.cart.length > 0 && this.loggedIn;
+    },
     removeFromCart(product) {
       // remove from store
       const cartStore = useCartStore();

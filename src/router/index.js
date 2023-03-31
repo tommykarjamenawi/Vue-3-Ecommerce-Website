@@ -10,7 +10,6 @@ const Products = () => import("@/views/ProductsView.vue");
 const Product = () => import("@/views/ProductView.vue");
 const Profile = () => import("@/views/ProfileView.vue");
 const Cart = () => import("@/views/CartView.vue");
-const Watchlist = () => import("@/views/WatchlistView.vue");
 const Orders = () => import("@/views/OrdersView.vue");
 const OrderDetails = () => import("@/views/OrderDetailsView.vue");
 const PasswordReset = () => import("@/views/PasswordResetView.vue");
@@ -58,11 +57,6 @@ const routes = [
     name: "cart",
     path: "/cart",
     component: Cart,
-  },
-  {
-    name: "watchlist",
-    path: "/watchlist",
-    component: Watchlist,
   },
   {
     name: "orders",
