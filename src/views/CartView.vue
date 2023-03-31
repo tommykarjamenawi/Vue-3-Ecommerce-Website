@@ -39,7 +39,9 @@
                     </option>
                   </select>
                 </div>
-                <a href="#" class="text-purple-600 hover:text-purple-500"
+                <a
+                  @click.prevent="removeFromCart(product)"
+                  class="text-purple-600 hover:text-purple-500"
                   >Remove</a
                 >
               </div>
@@ -100,8 +102,13 @@ export default {
   },
   methods: {
     removeFromCart(product) {
+      // remove from store
       const cartStore = useCartStore();
       cartStore.removeFromCart(product);
+
+      // remove form local cart
+      this.cart = this.cart.filter((item) => item.id !== product.id);
+      this.totalPrice();
     },
     updateQuantity(product, quantity) {
       const cartStore = useCartStore();
