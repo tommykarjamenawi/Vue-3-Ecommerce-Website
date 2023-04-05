@@ -87,6 +87,11 @@ const routes = [
     component: Invoice,
   },
   {
+    name: "admin",
+    path: "/admin",
+    component: Admin,
+  },
+  {
     path: "/:catchAll(.*)*", // catch all 404
     redirect: { name: "home" },
   },
