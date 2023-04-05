@@ -8,7 +8,7 @@
 
 <script>
 import AppNavBar from "@/components/AppNavBar.vue";
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from "@/stores/user";
 import { useCartStore } from "./stores/cart";
 import { useProductStore } from "./stores/product";
 

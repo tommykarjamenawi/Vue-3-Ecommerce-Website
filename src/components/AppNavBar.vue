@@ -1,7 +1,7 @@
 <template>
   <!-- navbar -->
   <header
-    v-if="!isAdminPage"
+    v-show="!isAdminPath()"
     class="sticky top-0 flex justify-between bg-slate-800 shadow-md text-white items-center"
   >
     <div class="font-serif">
@@ -457,8 +457,8 @@ export default {
     loggedIn() {
       return useUserStore().loggedIn;
     },
-    isAdminPage() {
-      return this.$route.name === "admin";
+    isAdminPath() {
+      return this.$route.path.includes("admin");
     },
   },
 };
