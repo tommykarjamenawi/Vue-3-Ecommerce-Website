@@ -33,6 +33,11 @@ export default {
     this.useCartStore = useCartStore();
     this.useCartStore.loadCart();
 
+    // load orders from local storage if user is logged in
+    if (this.userStore.isLoggedIn) {
+      this.userStore.loadOrders();
+    }
+
     // initialize product store
     this.useProductStore = useProductStore();
   },
