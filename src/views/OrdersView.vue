@@ -90,11 +90,5 @@ export default {
     await orderStore.fetchOrders(userStore.id);
     this.orders = orderStore.getOrders;
   },
-  async beforeMount() {
-    const userStore = useUserStore();
-    const orderStore = useOrderStore();
-    await orderStore.fetchOrders(userStore.id);
-    this.orders = orderStore.getOrders;
-  },
 };
 </script>

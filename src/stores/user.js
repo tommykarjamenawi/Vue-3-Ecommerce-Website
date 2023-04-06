@@ -38,7 +38,8 @@ export const useUserStore = defineStore("user", {
             localStorage.setItem("full_name", res.data.full_name);
             localStorage.setItem("email", res.data.email);
             localStorage.setItem("role", res.data.role);
-
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + res.data.jwt;
             resolve();
           })
           .catch((error) => reject(error));
