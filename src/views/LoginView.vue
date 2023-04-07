@@ -76,7 +76,7 @@ export default {
       userStore
         .login(this.email, this.password)
         .then(() => {
-          this.$router.replace("/products");
+          this.$router.push("/products");
         })
         .catch((error) => {
           this.errorMessage = error;

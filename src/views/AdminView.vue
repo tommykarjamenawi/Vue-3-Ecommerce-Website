@@ -28,8 +28,8 @@
       <div class="sidebar-content px-4 py-6">
         <ul class="flex flex-col w-full">
           <li class="my-px">
-            <a
-              href="#"
+            <router-link
+              :to="{ name: 'admin' }"
               class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 bg-gray-100"
             >
               <span
@@ -50,17 +50,17 @@
                 </svg>
               </span>
               <span class="ml-3">Dashboard</span>
-            </a>
+            </router-link>
           </li>
           <li class="my-px">
             <span
               class="flex font-medium text-sm text-gray-300 px-4 my-4 uppercase"
-              >Projects</span
+              >Data</span
             >
           </li>
           <li class="my-px">
-            <a
-              href="#"
+            <router-link
+              :to="{ name: 'adminProducts' }"
               class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
             >
               <span
@@ -81,11 +81,11 @@
                 </svg>
               </span>
               <span class="ml-3">Products</span>
-            </a>
+            </router-link>
           </li>
           <li class="my-px">
-            <a
-              href="#"
+            <router-link
+              :to="{ name: 'adminOrders' }"
               class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
             >
               <span
@@ -106,11 +106,11 @@
                 </svg>
               </span>
               <span class="ml-3">Orders</span>
-            </a>
+            </router-link>
           </li>
           <li class="my-px">
-            <a
-              href="#"
+            <router-link
+              :to="{ name: 'users' }"
               class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
             >
               <span
@@ -135,10 +135,10 @@
                 class="flex items-center justify-center text-xs text-red-500 font-semibold bg-red-100 h-6 px-2 rounded-full ml-auto"
                 >1k</span
               >
-            </a>
+            </router-link>
           </li>
-          <li class="my-px">
-            <a
+          <!-- <li class="my-px">
+            <router-link
               href="#"
               class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
             >
@@ -160,8 +160,8 @@
                 </svg>
               </span>
               <span class="ml-3">Add new</span>
-            </a>
-          </li>
+            </router-link>
+          </li> -->
           <li class="my-px">
             <span
               class="flex font-medium text-sm text-gray-300 px-4 my-4 uppercase"
@@ -250,7 +250,7 @@
           </li>
           <li class="my-px">
             <a
-              href="#"
+              @click="logout()"
               class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
             >
               <span
@@ -329,18 +329,18 @@
           <div class="flex ml-auto">
             <a href="" class="flex flex-row items-center">
               <img
-                src="https://pbs.twimg.com/profile_images/378800000298815220/b567757616f720812125bfbac395ff54_normal.png"
+                src=""
                 alt=""
                 class="h-10 w-10 bg-gray-200 border rounded-full"
               />
               <span class="flex flex-col ml-2">
                 <span
                   class="truncate w-20 font-semibold tracking-wide leading-none"
-                  >John Doe</span
+                  >{{ adminName }}</span
                 >
                 <span
                   class="truncate w-20 text-gray-500 text-xs leading-none mt-1"
-                  >Manager</span
+                  >{{ adminRole }}</span
                 >
               </span>
             </a>
@@ -355,6 +355,8 @@
         <app-users-table v-if="isUsers()" />
         <app-products-table v-if="isProducts()" />
         <app-orders-table v-if="isOrders()" />
+        <app-user-info v-if="isUser()" />
+        <app-order-details v-if="isOrder()" />
       </div>
       <!-- MAIN CONTENT END -->
       <footer class="footer px-4 py-6">
@@ -375,11 +377,18 @@ import AppDashboard from "@/components/AppDashboard.vue";
 import AppUsersTable from "@/components/AppUsersTable.vue";
 import AppProductsTable from "@/components/AppProductsTable.vue";
 import AppOrdersTable from "@/components/AppOrdersTable.vue";
+import AppUserInfo from "../components/AppUserInfo.vue";
+import AppOrderDetails from "../components/AppOrderDetails.vue";
 export default {
   name: "AppAdminView",
   data() {
     return {
-      top: 0,
+      totalUsers: 0,
+      totalOrders: 0,
+      totalProducts: 0,
+      totalCustomers: 0,
+      adminName: "",
+      adminRole: "",
     };
   },
   components: {
@@ -387,14 +396,17 @@ export default {
     AppUsersTable,
     AppProductsTable,
     AppOrdersTable,
+    AppUserInfo,
+    AppOrderDetails,
   },
   mounted() {
-    this.useCartStore = useUserStore();
+    this.useUserStore = useUserStore();
     // check for role
-    if (this.useCartStore.role !== "1") {
+    if (this.useUserStore.role !== "1") {
       this.$router.push({ name: "home" });
     } else {
-      console.log("You are an admin");
+      this.adminName = this.useUserStore.full_name
+      this.adminRole = this.useUserStore.role;
     }
   },
   methods: {
@@ -412,10 +424,16 @@ export default {
       return this.$route.name === "users";
     },
     isProducts() {
-      return this.$route.name === "products";
+      return this.$route.name === "adminProducts";
     },
     isOrders() {
-      return this.$route.name === "orders";
+      return this.$route.name === "adminOrders";
+    },
+    isOrder() {
+      return this.$route.name === "adminOrderDetails";
+    },
+    isUser() {
+      return this.$route.name === "user";
     },
   },
 };

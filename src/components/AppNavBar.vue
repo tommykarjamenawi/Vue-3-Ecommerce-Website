@@ -229,6 +229,14 @@
             PC</router-link
           >
         </li>
+        <li v-if="this.showAdmin">
+          <router-link
+            :to="{ name: 'admin' }"
+            class="block px-3 py-2 hover:bg-slate-900"
+            ><i class="fa-sharp fa-solid fa-circle-info mr-2"></i>Admin
+            PC</router-link
+          >
+        </li>
       </ul>
     </nav>
     <nav class="hidden md:block">
@@ -431,10 +439,14 @@ export default {
       showDropdown: false,
       showMobileDropdown: false,
       useCartStore: null,
+      showAdmin: false,
     };
   },
   mounted() {
     this.useCartStore = useCartStore();
+  },
+  updated() {
+    this.isAdmin();
   },
   methods: {
     toggleDropdown() {
@@ -459,6 +471,9 @@ export default {
     },
     isAdminPath() {
       return this.$route.path.includes("admin");
+    },
+    isAdmin() {
+      this.showAdmin = useUserStore().getCurrentUserRole === "1";
     },
   },
 };

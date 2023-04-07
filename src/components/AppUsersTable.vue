@@ -6,6 +6,16 @@
   >
     <!-- start table -->
     <div class="overflow-x-auto border-4">
+      <!-- add user button -->
+      <div class="flex items-center">
+        <button
+          @click.prevent="addUser()"
+          type="button"
+          class="px-4 py-2 border rounded-md border-gray-100 bg-indigo-300 hover:bg-indigo-400 focus:outline-none focus:ring focus:ring-opacity-75 focus:ring-violet-400 hover:text-white"
+        >
+          Add User +
+        </button>
+      </div>
       <table class="min-w-full divide-y-2 divide-gray-200 text-sm">
         <thead>
           <tr>
@@ -64,19 +74,21 @@
               {{ user.email }}
             </td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-              {{ user.email }}
+              {{ user.address }}
             </td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">1</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+              {{ user.role }}
+            </td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">
               {{ user.image }}
             </td>
             <td class="whitespace-nowrap px-4 py-2">
-              <a
-                href="#"
+              <router-link
+                :to="{ name: 'user', params: { id: user.id } }"
                 class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
               >
-                View
-              </a>
+                Edit
+              </router-link>
             </td>
           </tr>
         </tbody>
@@ -154,7 +166,7 @@
 <script>
 import { useUserStore } from "@/stores/user";
 export default {
-  name: "AppNavBar",
+  name: "AppUsersTable",
   data() {
     return {
       users: [],
@@ -170,6 +182,9 @@ export default {
     },
     loggedIn() {
       return useUserStore().loggedIn;
+    },
+    addUser() {
+      this.$router.push({ name: "addUser" });
     },
   },
 };

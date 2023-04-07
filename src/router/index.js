@@ -14,9 +14,6 @@ const Orders = () => import("@/views/OrdersView.vue");
 const OrderDetails = () => import("@/views/OrderDetailsView.vue");
 const PasswordReset = () => import("@/views/PasswordResetView.vue");
 const Admin = () => import("@/views/AdminView.vue");
-// const AdminUsers = () => import("@/components/AppUsersTable.vue");
-// const AdminProducts = () => import("@/components/AppProductsTable.vue");
-// const AdminOrders = () => import("@/components/AppOrdersTable.vue");
 const Invoice = () => import("@/views/InvoiceView.vue");
 
 const routes = [
@@ -100,13 +97,28 @@ const routes = [
     component: Admin,
   },
   {
-    name: "products",
+    name: "user",
+    path: "/admin/users/:id",
+    component: Admin,
+  },
+  {
+    name: "adminProducts",
     path: "/admin/products",
     component: Admin,
   },
   {
-    name: "orders",
+    name: "adminOrders",
     path: "/admin/orders",
+    component: Admin,
+  },
+  {
+    name: "adminOrderDetails",
+    path: "/admin/orders/:id",
+    component: Admin,
+  },
+  {
+    name: "adminProductDetails",
+    path: "/admin/peoducts/:id",
     component: Admin,
   },
   {

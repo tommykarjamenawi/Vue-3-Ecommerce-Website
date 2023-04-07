@@ -12,6 +12,7 @@
       </p>
       <div class="mb-4">
         <input
+          v-model="this.user.full_name"
           placeholder="Your name"
           type="text"
           name="name"
@@ -20,6 +21,7 @@
       </div>
       <div class="mb-4">
         <input
+          v-model="this.user.email"
           placeholder="Your Email"
           type="email"
           name="email"
@@ -28,6 +30,7 @@
       </div>
       <div class="mb-4">
         <input
+          v-model="this.user.password"
           placeholder="Password"
           type="password"
           name="password"
@@ -36,6 +39,7 @@
       </div>
       <div class="mb-4">
         <input
+          v-model="repeatPassword"
           placeholder="Repeat Password"
           type="password"
           name="password"
@@ -44,6 +48,7 @@
       </div>
 
       <button
+        @click.prevent="register()"
         class="btn-primary bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 w-full"
       >
         Signup
@@ -51,3 +56,38 @@
     </form>
   </main>
 </template>
+
+<script>
+import { useUserStore } from "@/stores/user";
+export default {
+  name: "RegisterView",
+  data() {
+    return {
+      user: {
+        full_name: "",
+        email: "",
+        password: "",
+      },
+      repeatPassword: "",
+      errorMessage: "",
+    };
+  },
+  methods: {
+    register() {
+      if (this.user.password !== this.repeatPassword) {
+        this.errorMessage = "Passwords mus tbe the same";
+        return;
+      }
+      const userStore = useUserStore();
+      userStore
+        .register(this.user)
+        .then(() => {
+          this.$router.push({ name: "login" });
+        })
+        .catch((error) => {
+          this.errorMessage = error.response.data.message;
+        });
+    },
+  },
+};
+</script>

@@ -28,5 +28,14 @@ export const useOrderStore = defineStore("order", {
         console.error(error);
       }
     },
+    async fetchAllOrders() {
+      try {
+        const response = await axios.get("/orders");
+        console.log(response);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 });

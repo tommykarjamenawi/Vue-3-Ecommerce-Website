@@ -72,6 +72,7 @@ export const useUserStore = defineStore("user", {
       }
     },
     logout() {
+      // remove all traces of user from local storage and state
       localStorage.removeItem("token");
       localStorage.removeItem("email");
       localStorage.removeItem("role");
@@ -79,8 +80,21 @@ export const useUserStore = defineStore("user", {
       this.email = "";
       this.role = "";
 
+      // clears the console
+      console.clear();
       // go to login page using router to /login
       router.push({ name: "login" });
+    },
+    register(user) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post("/users", user)
+          .then((res) => {
+            console.log(res.data);
+            resolve();
+          })
+          .catch((error) => reject(error));
+      });
     },
     async getUserDetails() {
       const res = await axios.get("/users/" + this.id);
@@ -114,6 +128,21 @@ export const useUserStore = defineStore("user", {
       const res = await axios.get("/users");
       // console.log(res.data);
       return res.data;
+    },
+    async updateUser(user) {
+      const res = await axios.put("/users/" + user.id, user);
+      console.log(res.data);
+      return res.data.message;
+    },
+    async getUser(id) {
+      const res = await axios.get("/users/" + id);
+      // console.log(res.data);
+      return res.data;
+    },
+    async deleteUser(id) {
+      const res = await axios.delete("/users/" + id);
+      console.log(res.data);
+      return res.data.message;
     },
   },
 });
