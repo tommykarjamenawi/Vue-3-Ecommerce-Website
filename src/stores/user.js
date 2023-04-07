@@ -110,5 +110,10 @@ export const useUserStore = defineStore("user", {
       console.log(res.data);
       return res.data.message;
     },
+    async getAllUsers() {
+      const res = await axios.get("/users");
+      // console.log(res.data);
+      return res.data;
+    },
   },
 });

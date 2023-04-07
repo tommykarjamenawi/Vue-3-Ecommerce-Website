@@ -11,7 +11,6 @@ export const useOrderStore = defineStore("order", {
   actions: {
     async fetchOrders(id) {
       try {
-        
         const response = await axios.get("/orders?user_id=" + id);
         // console.log(response);
         this.orders = response.data;
