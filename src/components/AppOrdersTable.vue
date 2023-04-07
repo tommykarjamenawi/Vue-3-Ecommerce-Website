@@ -1,9 +1,7 @@
 <template>
   <h1 class="font-bold text-2xl text-gray-700">Orders</h1>
 
-  <div
-    class="flex flex-col flex-grow border-4 border-gray-400 border-dashed rounded mt-4"
-  >
+  <div class="flex flex-col flex-grow rounded mt-4">
     <!-- stats start -->
     <div
       class="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4 pb-6"

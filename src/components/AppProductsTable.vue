@@ -1,50 +1,53 @@
 <template>
   <h1 class="font-bold text-2xl text-gray-700">Products</h1>
 
+  <!-- Product List -->
   <div
-    class="flex flex-col flex-grow border-4 border-gray-400 border-dashed rounded mt-4"
+    class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-5 border"
   >
-    <!-- stats start -->
+    <!-- Product Item -->
     <div
-      class="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4 pb-6"
+      v-for="product in this.products"
+      :key="product.id"
+      class="border border-1 border-gray-200 rounded-md hover:border-purple-600 transition-colors bg-white"
     >
-      <!-- start cards -->
-      <router-link
-        :to="{ name: 'adminProductDetails', params: { id: product.id } }"
-        v-for="product in products"
-        :key="product.id"
-        class="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-indigo-600 dark:text-gray-100"
-      >
-        <div
-          class="flex justify-center p-2 align-middle rounded-lg sm:p-4 dark:bg-violet-400"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-            fill="currentColor"
-            class="h-9 w-9 dark:text-gray-800"
-          >
-            <polygon
-              points="160 96.039 160 128.039 464 128.039 464 191.384 428.5 304.039 149.932 304.039 109.932 16 16 16 16 48 82.068 48 122.068 336.039 451.968 336.039 496 196.306 496 96.039 160 96.039"
-            ></polygon>
-            <path
-              d="M176.984,368.344a64.073,64.073,0,0,0-64,64h0a64,64,0,0,0,128,0h0A64.072,64.072,0,0,0,176.984,368.344Zm0,96a32,32,0,1,1,32-32A32.038,32.038,0,0,1,176.984,464.344Z"
-            ></path>
-            <path
-              d="M400.984,368.344a64.073,64.073,0,0,0-64,64h0a64,64,0,0,0,128,0h0A64.072,64.072,0,0,0,400.984,368.344Zm0,96a32,32,0,1,1,32-32A32.038,32.038,0,0,1,400.984,464.344Z"
-            ></path>
-          </svg>
-        </div>
-        <div class="flex flex-col justify-center align-middle">
-          <p class="text-3xl font-semibold leading-none">
-            product #{{ product.id }}
-          </p>
-          <p class="capitalize">ordered by: {{ product.name }}</p>
-        </div>
-      </router-link>
+      <a :href="`/admin/products/${product.id}`" class="block overflow-hidden">
+        <img
+          :src="`${this.baseIMG}${product.image}`"
+          alt=""
+          class="rounded-lg hover:scale-105 hover:rotate-1 transition-transform"
+        />
+      </a>
+      <div class="p-4">
+        <a class="text-xl font-bold" :href="`/admin/products/${product.id}`">
+          {{ product.name }}
+        </a>
+        <h3 class="text-lg">
+          <a :href="`/admin/products/${product.id}`">
+            {{ product.description }}
+          </a>
+        </h3>
+        <h5 class="font-bold">{{ product.price }}</h5>
+      </div>
+      <div class="flex justify-between py-3 px-4"></div>
     </div>
-    <!-- stats end -->
+    <!--/ Product Item -->
+    <!-- add product -->
+    <a
+      href="/admin/products/add"
+      class="border border-1 border-gray-200 rounded-md hover:border-purple-600 transition-colors bg-white"
+    >
+      <a href="/admin/products/add" class="block p-4 text-center">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png"
+          alt="Add Product"
+          class="w-12 mx-auto mb-2"
+        />
+        <span class="text-gray-600">Add Product</span>
+      </a>
+    </a>
   </div>
+  <!--/ Product List -->
 </template>
 
 <script>
@@ -54,6 +57,7 @@ export default {
   data() {
     return {
       products: [],
+      baseIMG: "/src/assets",
     };
   },
   async mounted() {

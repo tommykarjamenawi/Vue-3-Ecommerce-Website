@@ -1,9 +1,7 @@
 <template>
   <h1 class="font-bold text-2xl text-gray-700">Dashboard</h1>
 
-  <div
-    class="flex flex-col flex-grow border-4 border-gray-400 border-dashed rounded mt-4"
-  >
+  <div class="flex flex-col flex-grow rounded mt-4">
     <!-- stats start -->
     <div
       class="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4 pb-6"
@@ -32,7 +30,7 @@
           </svg>
         </div>
         <div class="flex flex-col justify-center align-middle">
-          <p class="text-3xl font-semibold leading-none">200</p>
+          <p class="text-3xl font-semibold leading-none">{{ orders.length }}</p>
           <p class="capitalize">Orders</p>
         </div>
       </div>
@@ -63,8 +61,8 @@
           </svg>
         </div>
         <div class="flex flex-col justify-center align-middle">
-          <p class="text-3xl font-semibold leading-none">7500</p>
-          <p class="capitalize">New customers</p>
+          <p class="text-3xl font-semibold leading-none">{{ users.length }}</p>
+          <p class="capitalize">User Accounts</p>
         </div>
       </div>
       <div
@@ -92,33 +90,40 @@
           </svg>
         </div>
         <div class="flex flex-col justify-center align-middle">
-          <p class="text-3xl font-semibold leading-none">172%</p>
-          <p class="capitalize">Growth</p>
-        </div>
-      </div>
-      <div
-        class="flex p-4 space-x-4 rounded-lg md:space-x-6 dark:bg-gray-900 dark:text-gray-100"
-      >
-        <div
-          class="flex justify-center p-2 align-middle rounded-lg sm:p-4 dark:bg-violet-400"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-            fill="currentColor"
-            class="h-9 w-9 dark:text-gray-800"
-          >
-            <path
-              d="M454.423,278.957,328,243.839v-8.185a116,116,0,1,0-104,0V312H199.582l-18.494-22.6a90.414,90.414,0,0,0-126.43-13.367,20.862,20.862,0,0,0-8.026,33.47L215.084,496H472V302.08A24.067,24.067,0,0,0,454.423,278.957ZM192,132a84,84,0,1,1,136,65.9V132a52,52,0,0,0-104,0v65.9A83.866,83.866,0,0,1,192,132ZM440,464H229.3L79.141,297.75a58.438,58.438,0,0,1,77.181,11.91l28.1,34.34H256V132a20,20,0,0,1,40,0V268.161l144,40Z"
-            ></path>
-          </svg>
-        </div>
-        <div class="flex flex-col justify-center align-middle">
-          <p class="text-3xl font-semibold leading-none">17%</p>
-          <p class="capitalize">Bounce rate</p>
+          <p class="text-3xl font-semibold leading-none">
+            {{ products.length }}
+          </p>
+          <p class="capitalize">Products</p>
         </div>
       </div>
     </div>
     <!-- stats end -->
   </div>
 </template>
+
+<script>
+import { useOrderStore } from "@/stores/order";
+import { useUserStore } from "@/stores/user";
+import { useProductStore } from "../stores/product";
+
+export default {
+  name: "AppDashBoard",
+  data() {
+    return {
+      orders: [],
+      users: [],
+      products: [],
+    };
+  },
+  async mounted() {
+    const orderStore = useOrderStore();
+    this.orders = await orderStore.fetchAllOrders();
+
+    const userStore = useUserStore();
+    this.users = await userStore.getAllUsers();
+
+    const productStore = useProductStore();
+    this.products = await productStore.getAllProducts();
+  },
+};
+</script>

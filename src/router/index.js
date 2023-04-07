@@ -107,6 +107,11 @@ const routes = [
     component: Admin,
   },
   {
+    name: "adminProductsAdd",
+    path: "/admin/products/add",
+    component: Admin,
+  },
+  {
     name: "adminOrders",
     path: "/admin/orders",
     component: Admin,
@@ -118,7 +123,7 @@ const routes = [
   },
   {
     name: "adminProductDetails",
-    path: "/admin/peoducts/:id",
+    path: "/admin/products/:id",
     component: Admin,
   },
   {
