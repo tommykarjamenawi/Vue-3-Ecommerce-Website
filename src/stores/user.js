@@ -42,7 +42,17 @@ export const useUserStore = defineStore("user", {
               "Bearer " + res.data.jwt;
             resolve();
           })
-          .catch((error) => reject(error));
+          .catch((error) => {
+            if (error.response.status === 401) {
+              // handle invalid login error
+              console.log(error.response.data);
+              reject(error.response.data);
+            } else {
+              // handle other errors
+              console.log(error);
+              reject(error);
+            }
+          });
       });
     },
     autoLogin() {

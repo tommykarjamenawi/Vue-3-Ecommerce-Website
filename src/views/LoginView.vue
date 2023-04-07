@@ -79,7 +79,7 @@ export default {
           this.$router.push("/products");
         })
         .catch((error) => {
-          this.errorMessage = error;
+          this.errorMessage = error.message;
         });
     },
   },
